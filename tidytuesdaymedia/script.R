@@ -36,7 +36,7 @@ top<- media_franchises %>%
 
 #### Plot ####
 
-p <- ggplot(data=top,
+ ggplot(data=top,
        aes(x =fct_reorder(franchise,revenue_tot),
            y=revenue_tot,
            fill=original_media))+
@@ -67,4 +67,3 @@ p <- ggplot(data=top,
     caption = "@alangel12407606
 #TidyTuesday")
 
-p
