@@ -1,2 +1,2 @@
 # Tidytuesday
-Repo for the #TidyTuesday challenge
+Repo for the #TidyTuesday challenge about Media Franchise
