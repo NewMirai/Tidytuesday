@@ -23,7 +23,16 @@ r4ds_members %>%
         axis.text.y = element_text(size=12,colour = "#bfbfbf"),
         strip.text = element_text(size=14,colour="#bfbfbf"),
         legend.text = element_text(colour = "#bfbfbf",size=8),
-        legend.title = element_text(colour = "#bfbfbf",vjust = .9,size=14))+
+        legend.title = element_text(colour = "#bfbfbf",vjust = .9,size=14),
+        plot.title = element_text(size=20,colour="#bfbfbf",hjust = .5),
+        plot.subtitle = element_text(size=16,colour = "#bfbfbf",hjust = .5),
+        plot.caption = element_text(colour = "#bfbfbf"))+
   labs(y='',
-       fill="Daily active members")
+       fill="Daily active members",
+       title = "Calendar heatmap of the active members",
+       subtitle = "Made with the ggTimeSeries package for super easy calendar heatmap\n",
+       caption = "#Tidy tuesday | Source: R4DS Slack | @alangel12407606")
+
+
+ggsave("calendar_heatmap.png",width = 16,height = 9,dpi = 400)
   
