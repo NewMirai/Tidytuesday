@@ -1,0 +1,107 @@
+---
+title: "Analysis FAA Wildlife strike"
+author: "NewMirai | @alangel12407606"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+
+## Tidy Tuesday
+
+For this 30th edition in 2019 of **Tidy Tuesday** we have a dataset coming from the FAA Wildlife Strike database to look at.
+A report on the full dataset can be found [**here**](https://www.faa.gov/airports/airport_safety/wildlife/media/Wildlife-Strike-Report-1990-2017.pdf). 
+
+[**Source**](https://wildlife.faa.gov/)
+
+[**Full data dictionary**](https://wildlife.faa.gov/downloads/fieldlist.xls)
+
+
+## EDA
+
+First we need to import some basics libraries in order to observe the dataset.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(visdat)
+library(skimr)
+library(RColorBrewer)
+library(glue)
+```
+
+Then, we get the data from this [**link**](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-23/wildlife_impacts.csv)
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+link <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-23/wildlife_impacts.csv"
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+wildlife_impacts <- readr::read_csv(link)
+```
+
+We can first, check if we have missing values
+
+```{r echo=FALSE, fig.height=5, fig.width=10, message=FALSE, warning=FALSE}
+visdat::vis_miss(wildlife_impacts,warn_large_data = F)
+```
+
+Interesting. It seems that most of the dataset is complete but **17,1%** of missing values is not negligible! We have to be careful about the choices of our variables. 
+
+Let's see a different reprenetation of our data using the `skirmr` library.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+skim_to_list(wildlife_impacts)
+
+
+```
+
+
+We have a dataset with high dimensions `r dim(wildlife_impacts)`. There is time-series data and geospatial data in this dataset so there is a lot of possibilities for the choice of plot.
+
+## Data wrangling
+
+```{r fig.height=7, fig.width=10, message=FALSE, warning=FALSE}
+proportion <- wildlife_impacts %>% 
+  select(incident_date,operator,state,damage,time_of_day,atype,time_of_day,phase_of_flt,species,speed) %>% 
+  mutate(time_of_day=if_else(is.na(time_of_day),"Unknown",time_of_day),
+         damage=case_when(
+           damage=="M"~ "Minor",
+           damage=="M?"~ "Minor Uncertain",
+           damage=="N"~ "None",
+           damage=="S"~ "Substantial",
+           damage=="D"~ "Destroyed",
+           is.na(damage)~ "Unknown Damage"
+         ))
+
+nonedmg <- 1.83+2.53+19.63+24.15+37.25
+
+p1 <- proportion %>% 
+  ggplot(aes(x=time_of_day,fill=time_of_day))+
+  geom_bar(aes(y=(..count..)/sum(..count..)))+
+  scale_y_continuous(labels=scales::percent)+
+  labs(x="Period of the day",
+       y="Relative frequencies",
+       title = "Incident per period of day with damage distinction",
+       subtitle = glue("{nonedmg} % of incident implies None damage. Good News!!!\n\n"),
+       fill="",
+       caption = "Author: @alangel12407606 | #TidyTuesday")+
+  geom_text(aes( label = paste(round(100*(..count..)/sum(..count..),digits = 2),"%"),
+                  y= (..count..)/sum(..count..) ), stat= "count", vjust = -.5,size=3)+
+  scale_fill_brewer(type = "qual",palette = "Set3")+
+  theme_minimal()+
+  facet_wrap(~damage)+
+  theme(legend.position = c(0.85,0.25),
+        plot.title = element_text(size=18,hjust = .5),
+        plot.subtitle = element_text(size=14,hjust = .5),
+        strip.background = element_rect(fill = "#f2f2f2"))
+
+p1
+```
+
+
+
+
+
+
+
+
