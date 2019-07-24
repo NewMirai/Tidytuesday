@@ -51,7 +51,7 @@ Interesting. It seems that most of the dataset is complete but **17,1%** of miss
 
 Let's see a different reprenetation of our data using the `skirmr` library.
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 skim_to_list(wildlife_impacts)
 
 
@@ -62,7 +62,7 @@ We have a dataset with high dimensions `r dim(wildlife_impacts)`. There is time-
 
 ## Data wrangling & plots
 
-```{r fig.height=7, fig.width=10, message=FALSE, warning=FALSE}
+```{r echo=FALSE, fig.height=9, fig.width=16, message=FALSE, warning=FALSE}
 proportion <- wildlife_impacts %>% 
   select(incident_date,operator,state,damage,time_of_day,atype,time_of_day,phase_of_flt,species,speed) %>% 
   mutate(time_of_day=if_else(is.na(time_of_day),"Unknown",time_of_day),
@@ -110,6 +110,9 @@ p1 <- proportion %>%
         strip.background = element_rect(fill = "#f2f2f2"))
 
 p1 <- ggdraw(plot = p1)+draw_image(image = "C:/Users/alain/Pictures/hourglass.png",scale = .07,y = -0.19,x=0.35)
+
+
+p1
 ```
 
 
