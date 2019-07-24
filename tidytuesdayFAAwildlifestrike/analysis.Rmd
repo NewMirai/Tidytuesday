@@ -28,6 +28,7 @@ library(RColorBrewer)
 library(glue)
 library(cowplot)
 library(magick)
+library(lubridate)
 ```
 
 Then, we get the data from this [**link**](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-23/wildlife_impacts.csv)
@@ -115,10 +116,53 @@ p1 <- ggdraw(plot = p1)+draw_image(image = "C:/Users/alain/Pictures/hourglass.pn
 p1
 ```
 
+```{r include=FALSE}
+
+ggsave("p1.png",dpi = 400,width = 16,height = 9)
+```
 
 
+```{r fig.height=5, fig.width=10}
+incident_number_year <- wildlife_impacts %>% 
+  group_by(incident_year) %>% 
+  tally() %>% 
+  mutate(incident_year=lubridate::ymd(incident_year, truncated = 2L))
+
+p2 <- incident_number_year %>% 
+  ggplot(aes(x=incident_year,y = n))+
+  geom_line(size=1.1)+
+  geom_point(size=3,colour="#C41616")+
+  scale_x_date(date_breaks = "1 year",date_labels ="%Y")+
+  theme_minimal()+
+  theme(panel.grid.minor = element_blank())+
+  labs(x="",
+       y="# of incidents",
+       title = "Incident by year")
+
+p2
+```
 
 
+```{r}
+incident_number_month <- wildlife_impacts %>% 
+  group_by(incident_year,incident_month) %>% 
+  tally() %>% 
+  unite(col = "incident_number_year_month",c("incident_year","incident_month"),sep = "-") %>% 
+  mutate(incident_number_year_month=lubridate::ymd(incident_number_year_month, truncated = 1L))
+
+
+p3 <- incident_number_month  %>% 
+  ggplot(aes(x=incident_number_year_month,y = n))+
+  geom_line(size=1.1)+
+  scale_x_date(date_breaks = "1 year",date_labels ="%Y")+
+  theme_minimal()+
+  theme(panel.grid.minor = element_blank())+
+  labs(x="",
+       y="# of incidents",
+       title = "Incident by month")
+
+p3
+```
 
 
 
