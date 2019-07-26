@@ -29,6 +29,7 @@ library(glue)
 library(cowplot)
 library(magick)
 library(lubridate)
+library(paletteer)
 ```
 
 Then, we get the data from this [**link**](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-23/wildlife_impacts.csv)
@@ -65,7 +66,7 @@ We have a dataset with high dimensions `r dim(wildlife_impacts)`. There is time-
 
 ```{r echo=FALSE, fig.height=9, fig.width=16, message=FALSE, warning=FALSE}
 proportion <- wildlife_impacts %>% 
-  select(incident_date,operator,state,damage,time_of_day,atype,time_of_day,phase_of_flt,species,speed) %>% 
+  select(incident_date,operator,state,damage,time_of_day,atype,time_of_day,phase_of_flt) %>% 
   mutate(time_of_day=if_else(is.na(time_of_day),"Unknown",time_of_day),
          damage=case_when(
            damage=="M"~ "Minor",
@@ -73,33 +74,37 @@ proportion <- wildlife_impacts %>%
            damage=="N"~ "None",
            damage=="S"~ "Substantial",
            damage=="D"~ "Destroyed",
-           is.na(damage)~ "Unknown Damage"
-         ))
+           is.na(damage)~ "Unknown Damage Category"
+         )) %>% 
+  group_by(time_of_day,damage) %>% 
+  tally()
 
 nonedmg <- 1.83+2.53+19.63+24.15+37.25
 
 p1 <- proportion %>% 
-  ggplot(aes(x=time_of_day,fill=time_of_day))+
-  geom_bar(aes(y=(..count..)/sum(..count..)),width = .1,colour="#1D0D6E")+
-  scale_y_continuous(labels=scales::percent,limits = c(0,.5))+
-  labs(x="Period of the day",
-       y="Relative frequencies",
-       title = "Incident per period of day with damage distinction",
-       subtitle = glue("{nonedmg} % of incident implies none damage. Good News!!! Also, 37,25 % of incident happens during the day and implied none damage!\n\n"),
-       fill="",
+  ggplot(aes(x=time_of_day,y=n,color=time_of_day))+
+  geom_segment(aes(y=0,yend=n,x=time_of_day,xend=time_of_day),colour="black")+
+  geom_point(size=4)+
+  #geom_bar(aes(y=(..count..)/sum(..count..)),width = .1,colour="#1D0D6E")+
+  #☺scale_y_continuous(labels=scales::percent,limits = c(0,.5))+
+  labs(x="",
+       y="# of incident",
+       title = "Incident per period of day and damage category\n",
+      # subtitle = glue("{nonedmg} % of incident implies none damage. Good News!!! Also, 37,25 % of incident happens during the day and implied none damage!\n\n"),
+       color="Period of the day",
        caption = "Author: @alangel12407606 | #TidyTuesday")+
-  geom_label(aes( label = paste(round(100*(..count..)/sum(..count..),digits = 2),"%"),
-                  y= (..count..)/sum(..count..) ), stat= "count", vjust =-1.5,size=4,show.legend = F)+
-  scale_fill_brewer(type = "qual",palette = "Set3")+
+  paletteer::scale_colour_paletteer_d(package = "ggsci",palette = "nrc_npg")+
+  scale_y_continuous(breaks = seq(0,25000,1000))+
   theme_minimal()+
   facet_wrap(~damage)+
-  theme(legend.position = c(0.85,0.15),
+  theme(legend.position = c(0.85,0.25),
         plot.title = element_text(size=20,hjust = .5),
-        plot.subtitle = element_text(size=16,hjust = .5),
-        legend.title = element_blank(),
+        plot.subtitle = element_text(size=12,hjust = .5),
+        legend.title = element_text(size = 16),
+        legend.title.align = 0.5,
         strip.text.x = element_text(size = 14),
         panel.grid.minor.y = element_blank(),
-        panel.background = element_rect(fill = "#F0FEFF",colour = "black"),
+        panel.background = element_rect(fill = NA,colour = "black"),
         #plot.background = element_rect(fill="#FDFFE3"),
         panel.grid.major = element_line(size=.25,color="#230699",linetype = "dotted"),
         axis.title.x = element_text(size = 14,vjust = -4),
@@ -110,59 +115,14 @@ p1 <- proportion %>%
         legend.background = element_rect(colour = "#1D0D6E",size=.6),
         strip.background = element_rect(fill = "#f2f2f2"))
 
-p1 <- ggdraw(plot = p1)+draw_image(image = "C:/Users/alain/Pictures/hourglass.png",scale = .07,y = -0.19,x=0.35)
+#p1 <- ggdraw(plot = p1)+draw_image(image = "C:/Users/alain/Pictures/hourglass.png",scale = .07,y = -0.19,x=0.35)
 
 
-p1
+plot(p1)
 ```
 
 ```{r include=FALSE}
 
 ggsave("p1.png",dpi = 400,width = 16,height = 9)
 ```
-
-
-```{r echo=FALSE, fig.height=5, fig.width=10}
-incident_number_year <- wildlife_impacts %>% 
-  group_by(incident_year) %>% 
-  tally() %>% 
-  mutate(incident_year=lubridate::ymd(incident_year, truncated = 2L))
-
-p2 <- incident_number_year %>% 
-  ggplot(aes(x=incident_year,y = n))+
-  geom_line(size=1.1)+
-  geom_point(size=3,colour="#C41616")+
-  scale_x_date(date_breaks = "1 year",date_labels ="%Y")+
-  theme_minimal()+
-  theme(panel.grid.minor = element_blank())+
-  labs(x="",
-       y="# of incidents",
-       title = "Incident by year")
-
-p2
-```
-
-
-```{r echo=FALSE, fig.height=5, fig.width=10}
-incident_number_month <- wildlife_impacts %>% 
-  group_by(incident_year,incident_month) %>% 
-  tally() %>% 
-  unite(col = "incident_number_year_month",c("incident_year","incident_month"),sep = "-") %>% 
-  mutate(incident_number_year_month=lubridate::ymd(incident_number_year_month, truncated = 1L))
-
-
-p3 <- incident_number_month  %>% 
-  ggplot(aes(x=incident_number_year_month,y = n))+
-  geom_line(size=1.1)+
-  scale_x_date(date_breaks = "1 year",date_labels ="%Y")+
-  theme_minimal()+
-  theme(panel.grid.minor = element_blank())+
-  labs(x="",
-       y="# of incidents",
-       title = "Incident by month")
-
-p3
-```
-
-
 
