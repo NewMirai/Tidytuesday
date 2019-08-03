@@ -29,7 +29,7 @@ grouped_average <- video_games_cleaned %>%
   summarise(average_price_by_year=mean(price,na.rm = T),
             median_price_by_year=median(price,na.rm = T)) %>% 
   ungroup() %>% 
-  drop_na() %>% 
+  #drop_na() %>% 
   mutate(Year=ymd(Year,truncated = 2))
 
 mean_2008 <- grouped_average %>%
@@ -82,3 +82,5 @@ grouped_average%>%
         plot.title = element_text(hjust = .5,size=20,colour = "#FFCD29"),
         plot.subtitle = element_text(hjust = .5,size = 14,colour = "#D4D4D4"),
         axis.text.y = element_text(size=10,color = "#FFCD29"))
+
+ggsave("plot.png",dpi = 400,width = 16,height = 9)
