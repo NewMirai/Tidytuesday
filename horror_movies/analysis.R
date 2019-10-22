@@ -82,7 +82,7 @@ p1 <- top5_countries_year %>%
         plot.title = element_markdown(size=24,family ="pm"),
         plot.subtitle = element_markdown(size= 12,family = "os"))
   
-x11(width = 1600 ,height = 900)
+x11(width = 1920 ,height = 1080)
 
 p1
 
