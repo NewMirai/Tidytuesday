@@ -37,11 +37,6 @@ plot_data <- plot_data[order(-value)]
 
 plot_data$language <- fct_relevel(plot_data$language,"Markdown","HTML","R","C++")
 
-
-mean_code <- round(cran_code[,mean(code)],2)
-mean_c<- round(cran_code[language =="C",mean(code)],2)
-mean_cpp<- round(cran_code[language =="C++",mean(code)],2)
-
 p <-  plot_data %>%
       ggplot(aes(x=language,y=value))+
       geom_point(aes(colour=variable,group=1L),size=7)+
@@ -81,3 +76,5 @@ anim <- p+transition_states(variable,
                     state_length = 1)
 
 animate(anim,width=1920,height=1080,res=100,fps = 60)
+
+anim_save('out/plot.gif')
