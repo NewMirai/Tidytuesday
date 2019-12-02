@@ -3,6 +3,14 @@ library(lubridate)
 library(ggsci)
 library(gganimate)
 library(ggthemes)
+library(showtext)
+
+
+font_add_google(name = "Oswald",family = "ow")
+font_add_google(name = "Open Sans",family = "os") 
+
+showtext_auto()
+
 
 nz_bird <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-11-19/nz_bird.csv")
 
@@ -39,14 +47,22 @@ p <- plot_data %>%
   coord_flip(clip = "off", expand = FALSE) +
   scale_color_d3(name="")+
   scale_fill_d3(name="")+
-  theme_tufte(14)+
+  theme_tufte(14,"os")+
   guides(color=F,fill=F)+
-  labs(title='Date time: {closest_state}', x = "",y="Count of votes")+
-  theme(plot.title = element_text(size = 22),
+  labs(subtitle ='Date time: {closest_state}',
+       title="Count of votes for the 5 most loved birds",
+       caption="Data:  New Zealand Forest and Bird Orginization | Visualisation by : @alangel12407606",
+       x = "",
+       y="Count of votes")+
+  theme(plot.title = element_text(size = 22,family = "ow"),
+        plot.subtitle = element_text(size=16),
+        plot.caption = element_text(face = "bold",vjust = -2,size=10),
         axis.ticks.y = element_blank(),
         axis.text.y  = element_blank())+
   transition_states(states = date_time,transition_length =4,state_length = 10)+
   ease_aes('cubic-in-out')
 
 
-animate(p, duration = 30, fps = 60,res=100,width=800,height=600)
+animate(p, fps = 60,width=800,height=600,duration = 45)
+
+anim_save('out/plot.gif')
