@@ -31,3 +31,6 @@ Here are my contributions to [#TidyTuesday](https://github.com/rfordatascience/t
 ## 2019-28 [Women's World Cup](https://data.world/sportsvizsunday/womens-world-cup-data)
 ![](https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdayWWC/top_50_scorers.jpeg?raw=true)
 ![](https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdayWWC/plot1.jpeg?raw=true)
+
+## 2019-27 [Media Franchises Revenues](https://en.wikipedia.org/wiki/List_of_highest-grossing_media_franchises)
+![https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdaymedia/plot.jpeg?raw=true]
