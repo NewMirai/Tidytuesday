@@ -16,3 +16,11 @@ Here are my contributions to [#TidyTuesday](https://github.com/rfordatascience/t
 ## 2019-43 [Horror movie ratings](https://www.kaggle.com/PromptCloudHQ/imdb-horror-movie-dataset)
 ![](https://github.com/NewMirai/Tidytuesday/blob/master/horror_movies/plot/plot.jpeg?raw=true)
 
+## 2019-34 [Nuclear explosions](https://github.com/data-is-plural/nuclear-explosions/blob/master/documents/sipri-report-original.pdf)
+![](https://github.com/NewMirai/Tidytuesday/blob/master/nuclear/plot.png?raw=true)
+
+## 2019-31 [Video Games](https://steamspy.com/year/?__cf_chl_jschl_tk__=7fba585236c4d8106a7057c925c8d80f5cadabe2-1575303093-0-Ac3lo9oBBZx_yC0aZYc8Yus8-4kTti_7kieV41W82YF0pY-hJ6sOXx4yQ8bxL-71A6TrR7m1aDg2WtvCw8Si1JRmZXU04A14N6jWQlY9Z9alR93fTIi-00Q66s8TTNbbWjYu3GoHdtWqePkeLWC8WHBqicDKhYnYaDq7wGCMG_EIJHNgBbUR43FmD_yI5UlktppcbErm4ig11-SwNwv50aO2AI2bXm6EXz64CeCYBU_28QITCT0lLc_yTxXIWJlLO0J-zX8jB14jPAxpathq5e4)
+![](https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdayvideogame/plot.png?raw=true)
+
+## 2019-30 [Wildlife strike](https://wildlife.faa.gov/home)
+![](https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdayFAAwildlifestrike/p1.png?raw=true)
