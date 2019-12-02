@@ -24,3 +24,6 @@ Here are my contributions to [#TidyTuesday](https://github.com/rfordatascience/t
 
 ## 2019-30 [Wildlife strike](https://wildlife.faa.gov/home)
 ![](https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdayFAAwildlifestrike/p1.png?raw=true)
+
+## 2019-29 [R4DS Membership](https://join.slack.com/t/rfordatascience/shared_invite/enQtMzA1Nzk1MjIzNDczLTY0OTVlMzM3ZTU5ZjA3NWE5ZDkxOGVmNjRjODQ2YmRjMzg4NWQxMDAxZTcwNzViZTczOThiNzBhYWJhZDM2ZTU)
+![](https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdayR4DS/calendar_heatmap.png?raw=true)
