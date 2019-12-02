@@ -4,4 +4,4 @@ Here are my contributions to [#TidyTuesday](https://github.com/rfordatascience/t
 
 ## 2019-47 [New Zealand Bird of the Year](https://www.forestandbird.org.nz/)
 
-![](https://github.com/NewMirai/Tidytuesday/tree/master/nz_bird/out/plot.gif)
+![nz-bird](https://github.com/NewMirai/Tidytuesday/tree/master/nz_bird/out/plot.gif)
