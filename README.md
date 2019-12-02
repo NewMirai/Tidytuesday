@@ -33,4 +33,4 @@ Here are my contributions to [#TidyTuesday](https://github.com/rfordatascience/t
 ![](https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdayWWC/plot1.jpeg?raw=true)
 
 ## 2019-27 [Media Franchises Revenues](https://en.wikipedia.org/wiki/List_of_highest-grossing_media_franchises)
-![https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdaymedia/plot.jpeg?raw=true]
+![](https://github.com/NewMirai/Tidytuesday/blob/master/tidytuesdaymedia/plot.jpeg?raw=true)
