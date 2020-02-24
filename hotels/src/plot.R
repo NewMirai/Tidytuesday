@@ -13,7 +13,6 @@ library(showtext)
 
 # add fonts
 
-
 font_add_google(name = "Playfair Display",family = "pd") 
 font_add_google(name = "Roboto",family = "rb") 
 
@@ -33,11 +32,9 @@ plot_df <-  hotels %>%
   mutate(arrival_date_year=as_factor(arrival_date_year),
          Continent = if_else(Continent == "Americas","America",Continent))
 
-
 hotels %>% 
   group_by(arrival_date_year) %>% 
   summarise(med=median(adr))
-
 
 chart <- plot_df %>% 
   ggplot(aes(x=arrival_date_year,y=median_adr,group=Continent))+
@@ -67,8 +64,3 @@ chart <- plot_df %>%
         axis.text.y = element_text(size=10),
         axis.text.x = element_text(size=14,face="bold",vjust = 1),
         legend.position = "top")
-
-  
-x11()
-
-chart
