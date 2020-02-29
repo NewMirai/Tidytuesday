@@ -5,11 +5,10 @@ library(skimr)
 library(lubridate)
 library(glue)
 library(countrycode)
-library(ggtext)
 library(forcats)
-library(ggtext)
 library(ggrepel)
 library(showtext)
+library(here)
 
 # add fonts
 
@@ -49,7 +48,7 @@ chart <- plot_df %>%
   labs(x="",
        color="Customer type",
        title="Daily rate ranking of Hotel Bookings accross continent",
-       subtitle=str_wrap(width = 140,"Shown below is a slopegraph of the median daily rate accross continent from 2015 to 2017. In two years America became the continent with the highest median daily rate while Europe remained last. One can also notice that Asia jump from the fourth to the second place. Overall a increasing trend of daily rate is observed."),
+       subtitle=str_wrap(width = 140,"Shown below is a slopegraph of the median daily rate accross continent from 2015 to 2017. In two years America became the continent with the highest median daily rate while Europe remained last. One can also notice that Asia jump from the fourth to the second place. Overall, a increasing trend of daily rate is observed."),
        caption = "#Tidy Tuesday | Source: Antonio, Almeida and Nunes, 2019 | Author: @alangel112407606 ",
        y="Median Daily Rate")+
   theme_bw(base_family = "rb")+
@@ -60,7 +59,15 @@ chart <- plot_df %>%
         axis.line.y = element_line(colour = "black",size=1),
         panel.grid.major.x = element_line(colour = "#676767",linetype = "dashed"),
         axis.ticks.x = element_blank(),
+        plot.background = element_rect(fill = "#F7F6E6"),
+        panel.background = element_rect(fill = "#F7F6E6"),
         axis.title.y = element_text(size=13,face="bold",vjust = 3),
         axis.text.y = element_text(size=10),
+        plot.caption = element_text(margin  = margin(15,0.5,0,0.5,unit='mm')),
         axis.text.x = element_text(size=14,face="bold",vjust = 1),
         legend.position = "top")
+
+
+
+
+chart
