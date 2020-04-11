@@ -7,7 +7,7 @@ library(roll)
 library(forcats)
 library(ggthemes)
 library(magrittr)
-
+library(ggforce)
 
 tdf_winners <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv')
 
@@ -24,9 +24,11 @@ top_country <- tdf_winners[, .N, by=birth_country
 distance <- tdf_winners[,.(start_date,distance,distance_r_5)] %>%
   melt.data.table(id.vars = "start_date")
 
-
 ggplot(data=distance, aes(x=start_date,y=value,colour=variable))+
-  geom_line()
+  geom_line(aes(linetype=variable),size=0.85)+
+  scale_colour_manual(values = c("#2d2d86","#cc3300"))+
+  scale_linetype_manual(values = c("solid","dashed"))+
+  theme_tufte()
 
 ggplot(data = tdf_winners,aes(x=tdf_winners$height,y=tdf_winners$weight))+
   geom_point()
