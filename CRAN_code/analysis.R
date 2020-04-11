@@ -10,7 +10,6 @@ library(glue)
 library(ggalt)
 library(ggtext)
 library(gganimate)
-library(av)
 
 options(scipen = 999)
 
